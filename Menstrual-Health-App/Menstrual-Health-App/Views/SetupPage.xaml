@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Menstrual_Health_App.ViewModels"
+             x:Class="Menstrual_Health_App.Views.SetupPage"
+             x:DataType="viewmodels:SetupViewModel"
+             Title="Welcome"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="10" Margin="0,30,0,20">
+                <Label Text="??" FontSize="64" HorizontalOptions="Center" />
+                <Label Text="Welcome to" 
+                       FontSize="20" 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray" />
+                <Label Text="Cycle Tracker" 
+                       FontSize="32" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" />
+                <Label Text="Let's set up your cycle tracking" 
+                       FontSize="16" 
+                       HorizontalOptions="Center" 
+                       TextColor="Gray" />
+            </VerticalStackLayout>
+
+            <!-- Setup Form -->
+            <Frame BackgroundColor="{AppThemeBinding Light=#F8F8F8, Dark=#2C2C2C}" 
+                   CornerRadius="20" 
+                   Padding="20">
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- Last Period Date -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="When did your last period start?" 
+                               FontSize="16" 
+                               FontAttributes="Bold" />
+                        <Label Text="This helps us predict your cycle phases" 
+                               FontSize="14" 
+                               TextColor="Gray" />
+                        <DatePicker Date="{Binding LastPeriodDate}"
+                                    MinimumDate="{Binding MinimumDate}"
+                                    MaximumDate="{Binding MaximumDate}"
+                                    FontSize="18"
+                                    HorizontalOptions="FillAndExpand" />
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="LightGray" />
+
+                    <!-- Cycle Length -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Average cycle length" 
+                               FontSize="16" 
+                               FontAttributes="Bold" />
+                        <Label Text="Typically 21-35 days (28 is average)" 
+                               FontSize="14" 
+                               TextColor="Gray" />
+                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                            <Stepper Minimum="21" Maximum="40" 
+                                     Value="{Binding CycleLengthDays}" 
+                                     Increment="1" />
+                            <Frame BackgroundColor="{Binding ., Converter={x:Null}}" 
+                                   Padding="15,8" 
+                                   CornerRadius="10"
+                                   BackgroundColor="#E91E63">
+                                <Label Text="{Binding CycleLengthDays, StringFormat='{0} days'}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="LightGray" />
+
+                    <!-- Period Length -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Average period length" 
+                               FontSize="16" 
+                               FontAttributes="Bold" />
+                        <Label Text="How many days does your period usually last?" 
+                               FontSize="14" 
+                               TextColor="Gray" />
+                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                            <Stepper Minimum="2" Maximum="10" 
+                                     Value="{Binding PeriodLengthDays}" 
+                                     Increment="1" />
+                            <Frame Padding="15,8" 
+                                   CornerRadius="10"
+                                   BackgroundColor="#E74C3C">
+                                <Label Text="{Binding PeriodLengthDays, StringFormat='{0} days'}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="LightGray" />
+
+                    <!-- Notifications -->
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label Text="Enable notifications" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" />
+                                <Label Text="Get reminders for each phase" 
+                                       FontSize="14" 
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" 
+                                    IsToggled="{Binding NotificationsEnabled}" 
+                                    OnColor="#E91E63"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Get Started Button -->
+            <Button Text="Get Started"
+                    Command="{Binding CompleteSetupCommand}"
+                    BackgroundColor="#E91E63"
+                    TextColor="White"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    CornerRadius="15"
+                    HeightRequest="60"
+                    Margin="0,10,0,0" />
+
+            <Label Text="You can change these settings anytime" 
+                   FontSize="14" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

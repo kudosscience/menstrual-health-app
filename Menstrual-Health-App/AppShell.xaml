@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Menstrual_Health_App"
+    xmlns:views="clr-namespace:Menstrual_Health_App.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="Menstrual_Health_App">
+    Title="Cycle Tracker">
 
     <ShellContent
         Title="Home"

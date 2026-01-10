@@ -1,25 +1,22 @@
-﻿namespace Menstrual_Health_App
+﻿using Menstrual_Health_App.ViewModels;
+
+namespace Menstrual_Health_App
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
-        public MainPage()
+        public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            base.OnAppearing();
+            if (BindingContext is MainViewModel vm)
+            {
+                await vm.RefreshDataAsync();
+            }
         }
     }
-
 }
