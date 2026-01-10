@@ -14,18 +14,32 @@ public class NotificationManagerService : INotificationManagerService
 
     public NotificationManagerService()
     {
-        Initialize();
+        // Defer initialization until actually needed - calling Register() during
+        // DI container build causes COMException because the app isn't fully initialized yet
     }
+
+    private bool initializationFailed;
 
     private void Initialize()
     {
-        if (isInitialized)
+        if (isInitialized || initializationFailed)
             return;
 
-        var notificationManager = AppNotificationManager.Default;
-        notificationManager.NotificationInvoked += OnNotificationInvoked;
-        notificationManager.Register();
-        isInitialized = true;
+        try
+        {
+            var notificationManager = AppNotificationManager.Default;
+            notificationManager.NotificationInvoked += OnNotificationInvoked;
+            notificationManager.Register();
+            isInitialized = true;
+        }
+        catch (Exception ex)
+        {
+            // AppNotificationManager.Register() can throw COMException if app identity
+            // is not properly configured or notifications are not available.
+            // Mark as failed to avoid repeated attempts and allow the app to continue.
+            initializationFailed = true;
+            System.Diagnostics.Debug.WriteLine($"Failed to initialize Windows notifications: {ex.Message}");
+        }
     }
 
     private void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
@@ -50,6 +64,9 @@ public class NotificationManagerService : INotificationManagerService
     {
         if (!isInitialized)
             Initialize();
+
+        if (!isInitialized)
+            return; // Initialization failed, skip notification
 
         messageId++;
 
@@ -84,6 +101,12 @@ public class NotificationManagerService : INotificationManagerService
 
     public void CancelAllNotifications()
     {
+        if (!isInitialized)
+            Initialize();
+
+        if (!isInitialized)
+            return; // Initialization failed, skip cancellation
+
         // Remove all notifications from notification center
         AppNotificationManager.Default.RemoveAllAsync().AsTask().Wait();
     }
