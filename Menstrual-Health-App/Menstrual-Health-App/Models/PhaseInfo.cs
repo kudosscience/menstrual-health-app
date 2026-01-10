@@ -1,8 +1,5 @@
 namespace Menstrual_Health_App.Models;
 
-/// <summary>
-/// Contains information about a specific cycle phase
-/// </summary>
 public class PhaseInfo
 {
     public CyclePhase Phase { get; set; }
@@ -16,9 +13,6 @@ public class PhaseInfo
     public List<string> ExerciseTips { get; set; } = new();
     public List<string> SelfCareTips { get; set; } = new();
 
-    /// <summary>
-    /// Get predefined phase information
-    /// </summary>
     public static PhaseInfo GetPhaseInfo(CyclePhase phase)
     {
         return phase switch
@@ -38,7 +32,7 @@ public class PhaseInfo
             Phase = CyclePhase.Menstrual,
             Title = "Menstrual Phase",
             Description = "Your period has started. This is the beginning of your cycle when the uterine lining sheds. It's normal to experience some discomfort, but this is also a time for rest and renewal.",
-            Icon = "??",
+            Icon = "P",
             PhaseColor = Color.FromArgb("#E74C3C"),
             Symptoms = new List<string>
             {
@@ -92,7 +86,7 @@ public class PhaseInfo
             Phase = CyclePhase.Follicular,
             Title = "Follicular Phase",
             Description = "Your body is preparing for ovulation. Estrogen levels are rising, and you may notice increased energy and improved mood. This is often considered the 'spring' of your cycle.",
-            Icon = "??",
+            Icon = "F",
             PhaseColor = Color.FromArgb("#E91E63"),
             Symptoms = new List<string>
             {
@@ -145,7 +139,7 @@ public class PhaseInfo
             Phase = CyclePhase.Ovulation,
             Title = "Ovulation Phase",
             Description = "This is your most fertile window. An egg is released from the ovary. You may feel your most confident and social during this time. Energy levels are typically at their peak.",
-            Icon = "??",
+            Icon = "O",
             PhaseColor = Color.FromArgb("#FF9800"),
             Symptoms = new List<string>
             {
@@ -199,7 +193,7 @@ public class PhaseInfo
             Phase = CyclePhase.Luteal,
             Title = "Luteal Phase",
             Description = "The post-ovulation phase when progesterone rises. You may start to feel more introspective and notice PMS symptoms as your period approaches. This is a time for winding down and self-care.",
-            Icon = "??",
+            Icon = "L",
             PhaseColor = Color.FromArgb("#9C27B0"),
             Symptoms = new List<string>
             {

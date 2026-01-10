@@ -10,7 +10,6 @@
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
 
-            <!-- Cycle Settings -->
             <Label Text="Cycle Settings" 
                    FontSize="20" 
                    FontAttributes="Bold" />
@@ -59,7 +58,6 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Notification Settings -->
             <Label Text="Notifications" 
                    FontSize="20" 
                    FontAttributes="Bold" />
@@ -85,7 +83,7 @@
                         <TimePicker Time="{Binding NotificationTime}" FontSize="16" />
                     </VerticalStackLayout>
 
-                    <Button Text="?? Test Notification"
+                    <Button Text="Test Notification"
                             Command="{Binding TestNotificationCommand}"
                             BackgroundColor="#9C27B0"
                             TextColor="White"
@@ -95,7 +93,6 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Save Button -->
             <Button Text="Save Settings"
                     Command="{Binding SaveCommand}"
                     BackgroundColor="#E91E63"
@@ -105,7 +102,6 @@
                     CornerRadius="10"
                     HeightRequest="50" />
 
-            <!-- Data Management -->
             <Label Text="Data Management" 
                    FontSize="20" 
                    FontAttributes="Bold"
@@ -126,7 +122,6 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- App Info -->
             <Label Text="About" 
                    FontSize="20" 
                    FontAttributes="Bold"
