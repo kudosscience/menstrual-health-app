@@ -12,6 +12,8 @@ namespace Menstrual_Health_App
             Routing.RegisterRoute(nameof(PhaseDetailPage), typeof(PhaseDetailPage));
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(SetupPage), typeof(SetupPage));
+            Routing.RegisterRoute(nameof(PhaseRecipesPage), typeof(PhaseRecipesPage));
+            Routing.RegisterRoute(nameof(RecipeDetailPage), typeof(RecipeDetailPage));
         }
     }
 }

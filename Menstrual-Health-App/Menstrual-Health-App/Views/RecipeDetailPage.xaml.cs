@@ -2,9 +2,9 @@ using Menstrual_Health_App.ViewModels;
 
 namespace Menstrual_Health_App.Views;
 
-public partial class PhaseDetailPage : ContentPage
+public partial class RecipeDetailPage : ContentPage
 {
-    public PhaseDetailPage(PhaseDetailViewModel viewModel)
+    public RecipeDetailPage(RecipeDetailViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

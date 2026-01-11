@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Menstrual_Health_App.ViewModels"
+             xmlns:models="clr-namespace:Menstrual_Health_App.Models"
+             x:Class="Menstrual_Health_App.Views.PhaseRecipesPage"
+             x:DataType="viewmodels:PhaseRecipesViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <Grid RowDefinitions="Auto,*">
+        
+        <!-- Header with nutrition info -->
+        <Frame Grid.Row="0" 
+               BackgroundColor="{Binding PhaseColor}" 
+               CornerRadius="0" 
+               Padding="20"
+               Margin="0">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Recommended Recipes" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding NutritionReason}" 
+                       FontSize="14" 
+                       TextColor="White"
+                       Opacity="0.9"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Loading indicator -->
+        <VerticalStackLayout Grid.Row="1" 
+                             IsVisible="{Binding IsLoading}"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             Spacing="10">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               Color="{Binding PhaseColor}"
+                               HeightRequest="50"
+                               WidthRequest="50" />
+            <Label Text="Loading recipes..." 
+                   FontSize="16" 
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Error state -->
+        <VerticalStackLayout Grid.Row="1" 
+                             IsVisible="{Binding HasError}"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             Spacing="15"
+                             Padding="20">
+            <Label Text="Error" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Couldn't load recipes" 
+                   FontSize="18" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+            <Label Text="Please check your internet connection and try again." 
+                   FontSize="14" 
+                   TextColor="Gray"
+                   HorizontalTextAlignment="Center" />
+            <Button Text="Retry" 
+                    Command="{Binding RetryCommand}"
+                    BackgroundColor="{Binding PhaseColor}"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    Padding="30,10" />
+        </VerticalStackLayout>
+
+        <!-- Recipe list -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Recipes}"
+                        IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
+                        Margin="10">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 Span="2" 
+                                 HorizontalItemSpacing="10" 
+                                 VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MealSummary">
+                    <Frame BackgroundColor="{AppThemeBinding Light=#F8F8F8, Dark=#2C2C2C}" 
+                           CornerRadius="15" 
+                           Padding="0"
+                           HasShadow="True">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PhaseRecipesViewModel}}, Path=SelectRecipeCommand}" 
+                                                  CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <Grid RowDefinitions="120,Auto">
+                            <Image Grid.Row="0" 
+                                   Source="{Binding StrMealThumb}" 
+                                   Aspect="AspectFill"
+                                   HeightRequest="120" />
+                            <VerticalStackLayout Grid.Row="1" Padding="10" Spacing="5">
+                                <Label Text="{Binding StrMeal}" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

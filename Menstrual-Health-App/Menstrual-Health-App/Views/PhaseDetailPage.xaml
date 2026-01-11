@@ -88,6 +88,16 @@
                 </VerticalStackLayout>
             </Frame>
 
+            <!-- Recipe suggestions button -->
+            <Button Text="View Recipe Suggestions"
+                    Command="{Binding ViewRecipesCommand}"
+                    BackgroundColor="#FF9800"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50" />
+
             <Label Text="Exercise Tips" 
                    FontSize="20" 
                    FontAttributes="Bold" />

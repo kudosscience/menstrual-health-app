@@ -20,6 +20,7 @@ namespace Menstrual_Health_App
 
             // Register Services
             builder.Services.AddSingleton<CycleDataService>();
+            builder.Services.AddSingleton<RecipeService>();
             
             // Register platform-specific notification service
 #if ANDROID
@@ -39,12 +40,16 @@ namespace Menstrual_Health_App
             builder.Services.AddTransient<PhaseDetailViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SetupViewModel>();
+            builder.Services.AddTransient<PhaseRecipesViewModel>();
+            builder.Services.AddTransient<RecipeDetailViewModel>();
 
             // Register Pages
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<PhaseDetailPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<SetupPage>();
+            builder.Services.AddTransient<PhaseRecipesPage>();
+            builder.Services.AddTransient<RecipeDetailPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
