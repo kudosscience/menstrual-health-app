@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Menstrual_Health_App.ViewModels"
+             x:Class="Menstrual_Health_App.Views.RecipeDetailPage"
+             x:DataType="viewmodels:RecipeDetailViewModel"
+             Title="{Binding MealName}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <Grid>
+        <!-- Loading indicator -->
+        <VerticalStackLayout IsVisible="{Binding IsLoading}"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             Spacing="10">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" 
+                               Color="#E91E63"
+                               HeightRequest="50"
+                               WidthRequest="50" />
+            <Label Text="Loading recipe..." 
+                   FontSize="16" 
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Error state -->
+        <VerticalStackLayout IsVisible="{Binding HasError}"
+                             VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             Spacing="15"
+                             Padding="20">
+            <Label Text="Error" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Couldn't load recipe" 
+                   FontSize="18" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+            <Label Text="Please check your internet connection and try again." 
+                   FontSize="14" 
+                   TextColor="Gray"
+                   HorizontalTextAlignment="Center" />
+            <Button Text="Retry" 
+                    Command="{Binding RetryCommand}"
+                    BackgroundColor="#E91E63"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    Padding="30,10" />
+        </VerticalStackLayout>
+
+        <!-- Recipe content -->
+        <ScrollView IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}">
+            <VerticalStackLayout Spacing="15" Padding="0,0,0,20">
+                
+                <!-- Meal image -->
+                <Image Source="{Binding MealImage}" 
+                       Aspect="AspectFill"
+                       HeightRequest="250" />
+
+                <VerticalStackLayout Spacing="15" Padding="20,0">
+                    
+                    <!-- Category and Area badges -->
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Frame BackgroundColor="#E91E63" 
+                               CornerRadius="15" 
+                               Padding="12,6"
+                               HasShadow="False">
+                            <Label Text="{Binding Category}" 
+                                   FontSize="12" 
+                                   TextColor="White" />
+                        </Frame>
+                        <Frame BackgroundColor="#3498DB" 
+                               CornerRadius="15" 
+                               Padding="12,6"
+                               HasShadow="False">
+                            <Label Text="{Binding Area}" 
+                                   FontSize="12" 
+                                   TextColor="White" />
+                        </Frame>
+                    </HorizontalStackLayout>
+
+                    <!-- YouTube button -->
+                    <Button Text="Watch Video Tutorial"
+                            Command="{Binding OpenYoutubeCommand}"
+                            IsVisible="{Binding HasYoutubeLink}"
+                            BackgroundColor="#FF0000"
+                            TextColor="White"
+                            FontSize="14"
+                            CornerRadius="10"
+                            HeightRequest="45" />
+
+                    <!-- Ingredients section -->
+                    <Label Text="Ingredients" 
+                           FontSize="20" 
+                           FontAttributes="Bold" 
+                           Margin="0,10,0,0" />
+                    
+                    <Frame BackgroundColor="{AppThemeBinding Light=#F8F8F8, Dark=#2C2C2C}" 
+                           CornerRadius="15" 
+                           Padding="15">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Ingredients}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <Label Text="*" FontSize="14" VerticalOptions="Start" TextColor="#E91E63" />
+                                        <Label Grid.Column="1" Text="{Binding}" FontSize="14" LineHeight="1.3" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Instructions section -->
+                    <Label Text="Instructions" 
+                           FontSize="20" 
+                           FontAttributes="Bold" 
+                           Margin="0,10,0,0" />
+                    
+                    <Frame BackgroundColor="{AppThemeBinding Light=#F8F8F8, Dark=#2C2C2C}" 
+                           CornerRadius="15" 
+                           Padding="15">
+                        <Label Text="{Binding Instructions}" 
+                               FontSize="14" 
+                               LineHeight="1.5" />
+                    </Frame>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

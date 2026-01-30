@@ -1,4 +1,6 @@
+using System.Windows.Input;
 using Menstrual_Health_App.Models;
+using Menstrual_Health_App.Views;
 
 namespace Menstrual_Health_App.ViewModels;
 
@@ -34,4 +36,16 @@ public class PhaseDetailViewModel : BaseViewModel
     public List<string> NutritionTips => PhaseInfo.NutritionTips;
     public List<string> ExerciseTips => PhaseInfo.ExerciseTips;
     public List<string> SelfCareTips => PhaseInfo.SelfCareTips;
+
+    public ICommand ViewRecipesCommand { get; }
+
+    public PhaseDetailViewModel()
+    {
+        ViewRecipesCommand = new Command(async () => await ViewRecipesAsync());
+    }
+
+    private async Task ViewRecipesAsync()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PhaseRecipesPage)}?Phase={PhaseInfo.Phase}");
+    }
 }
